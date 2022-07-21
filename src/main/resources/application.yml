@@ -3,7 +3,7 @@ spring:
     banner-mode: off
 
   datasource:
-    url: jdbc:mysql://localhost:3306/springboot_demo
+    url: jdbc:mysql://localhost:3306/db_file_process
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
