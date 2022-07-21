@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.StudentMapper">
+    <insert id="addStudent" parameterType="StudentBean">
+        insert into tb_student (s_num, s_name, chinese_score, math_score, english_score, total_score)
+        values (#{num}, #{name}, #{chineseScore}, #{mathScore}, #{englishScore}, #{totalScore})
+    </insert>
+</mapper>
