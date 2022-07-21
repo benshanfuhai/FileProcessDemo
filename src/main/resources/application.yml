@@ -1,0 +1,22 @@
+spring:
+  main:
+    banner-mode: off
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/springboot_demo
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+
+  web:
+    resources:
+      static-locations: classpath:templates/
+
+server:
+  servlet:
+    context-path: /file-process
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.demo.bean
+
