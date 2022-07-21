@@ -24,7 +24,7 @@ public class ExcelUtils {
             // 获取工作表对象，即第一个工作表（工作簿里面有很多张工作表，这里取第一张工作表）
             Sheet sheet = workbook.getSheetAt(0);
             // 获取工作表的总行数
-            int rowLength = sheet.getLastRowNum();
+            int rowLength = sheet.getLastRowNum() + 1;
             // 获取工作表第一行数据
             Row row = sheet.getRow(0);
             // 获取工作表总列数
@@ -32,7 +32,7 @@ public class ExcelUtils {
 
             // 创建一个单元格对象
             Cell cell;
-            for (int i = 0; i < rowLength; i++) {
+            for (int i = 1; i < rowLength; i++) {
                 StudentBean studentBean = new StudentBean();
                 for (int j = 0; j < colLength; j++) {
                     // 获取第i行j列的数据
