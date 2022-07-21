@@ -70,4 +70,56 @@ public class ExcelUtils {
         }
         return studentBeanList;
     }
+
+
+    public static List<StudentBean> excelToDB(InputStream inputStream) {
+        List<StudentBean> studentBeanList = new ArrayList<>();
+        Workbook workbook;
+        try {
+            workbook = WorkbookFactory.create(inputStream);
+
+            inputStream.close();
+
+            Sheet sheet = workbook.getSheetAt(0);
+
+            int rowLength = sheet.getLastRowNum() + 1;
+
+            int colLength = sheet.getRow(0).getLastCellNum();
+
+            Cell cell;
+            for (int i = 1; i < rowLength; i++) {
+                StudentBean studentBean = new StudentBean();
+                Row row = sheet.getRow(i);
+                for (int j = 0; j < colLength; j++) {
+                    cell = row.getCell(j);
+                    cell.setCellType(CellType.STRING);
+                    String stringCellValue = cell.getStringCellValue();
+                    switch (j) {
+                        case 0:
+                            studentBean.setNum(stringCellValue);
+                            break;
+                        case 1:
+                            studentBean.setName(stringCellValue);
+                            break;
+                        case 2:
+                            studentBean.setChineseScore(Integer.parseInt(stringCellValue));
+                            break;
+                        case 3:
+                            studentBean.setMathScore(Integer.parseInt(stringCellValue));
+                            break;
+                        case 4:
+                            studentBean.setEnglishScore(Integer.parseInt(stringCellValue));
+                            break;
+                        case 5:
+                            studentBean.setTotalScore(Integer.parseInt(stringCellValue));
+                            break;
+                    }
+                }
+                studentBeanList.add(studentBean);
+            }
+        } catch (Exception e) {
+            LOGGER.error("parse excel file error :", e);
+        }
+        return studentBeanList;
+    }
 }
