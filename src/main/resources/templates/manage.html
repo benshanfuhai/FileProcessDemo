@@ -2,18 +2,79 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <script src="webjars/jquery/2.0.0/jquery.min.js"></script>
+        <style>
+            #input-form input {
+                width: 80px;
+            }
+        </style>
         <title>Manage</title>
     </head>
     <body>
         <div>
             <div align="center">
                 <h1>Manage</h1>
-                <form action="uploadToDB" method="post" enctype="multipart/form-data">
+                <form id="file-form" action="uploadToDB" method="post" enctype="multipart/form-data">
                     <h3>upload file</h3>
                     <input type="file" name="file">
                     <input type="submit" value="submit">
                 </form>
+                <hr>
+                <h3>input</h3>
+                <form id="input-form" onsubmit="inputStudent()">
+                    <table>
+                        <tr>
+                            <td><label>s_num: </label></td>
+                            <td><input type="text" id="s_num" name="s_num"></td>
+                        </tr>
+                        <tr>
+                            <td><label>s_name: </label></td>
+                            <td><input type="text" id="s_name" name="s_name"></td>
+                        </tr>
+                        <tr>
+                            <td><label>chinese_score: </label></td>
+                            <td><input type="text" id="chinese_score" name="chinese_score"></td>
+                        </tr>
+                        <tr>
+                            <td><label>math_score: </label></td>
+                            <td><input type="text" id="math_score" name="math_score"></td>
+                        </tr>
+                        <tr>
+                            <td><label>english_score: </label></td>
+                            <td><input type="text" id="english_score" name="english_score"></td>
+                        </tr>
+                        <tr>
+                            <td><label>total_score: </label></td>
+                            <td><input type="text" id="total_score" name="total_score"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="reset" value="reset"></td>
+                            <td><input type="submit" value="submit"></td>
+                        </tr>
+                    </table>
+                </form>
             </div>
         </div>
+
+        <script>
+            function inputStudent() {
+                var student = {
+                    "num": document.getElementById("s_num").value,
+                    "name": document.getElementById("s_name").value,
+                    "chineseScore": document.getElementById("chinese_score").value,
+                    "mathScore": document.getElementById("math_score").value,
+                    "englishScore": document.getElementById("english_score").value,
+                    "totalScore": document.getElementById("total_score").value
+                }
+                $.ajax({
+                    url: "inputToDB",
+                    type: "POST",
+                    data: {studentString: JSON.stringify(student)},
+                    success: function (res) {
+                        alert(res)
+                    }
+                })
+            }
+        </script>
     </body>
 </html>

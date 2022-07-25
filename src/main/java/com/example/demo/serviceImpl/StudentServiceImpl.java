@@ -30,4 +30,15 @@ public class StudentServiceImpl implements StudentService {
             return false;
         }
     }
+
+    @Override
+    public boolean singleImport(StudentBean studentBean) {
+        try {
+            studentMapper.addStudent(studentBean);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

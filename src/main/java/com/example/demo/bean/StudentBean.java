@@ -1,5 +1,6 @@
 package com.example.demo.bean;
 
+
 public class StudentBean {
     private Integer id;
     private String num;
@@ -11,6 +12,15 @@ public class StudentBean {
 
     public StudentBean(Integer id, String num, String name, Integer chineseScore, Integer mathScore, Integer englishScore, Integer totalScore) {
         this.id = id;
+        this.num = num;
+        this.name = name;
+        this.chineseScore = chineseScore;
+        this.mathScore = mathScore;
+        this.englishScore = englishScore;
+        this.totalScore = totalScore;
+    }
+
+    public StudentBean(String num, String name, Integer chineseScore, Integer mathScore, Integer englishScore, Integer totalScore) {
         this.num = num;
         this.name = name;
         this.chineseScore = chineseScore;
