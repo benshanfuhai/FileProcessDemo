@@ -40,4 +40,15 @@ public class StudentServiceImpl implements StudentService {
             return false;
         }
     }
+
+    @Override
+    public List<StudentBean> getAllStudent() {
+        try {
+            List<StudentBean> studentBeanList = studentMapper.queryAllStudent();
+            return studentBeanList;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

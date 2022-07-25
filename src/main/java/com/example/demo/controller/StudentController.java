@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.List;
 
@@ -52,5 +54,11 @@ public class StudentController {
         System.out.println("studentInfo: " + studentString);
         StudentBean studentBean = JSONArray.toJavaObject((JSONObject) JSONArray.parse(studentString), StudentBean.class);
         return studentService.singleImport(studentBean);
+    }
+
+    @GetMapping("/download/students")
+    @ResponseBody
+    public void dbToFile(HttpServletResponse httpServletResponse) {
+        ExcelUtils.exportToExcel(studentService.getAllStudent(), httpServletResponse);
     }
 }

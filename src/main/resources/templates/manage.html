@@ -20,6 +20,8 @@
                     <input type="submit" value="submit">
                 </form>
                 <hr>
+                <button id="download-file" onclick="downloadFile()">Download</button>
+                <hr>
                 <h3>input</h3>
                 <form id="input-form" onsubmit="inputStudent()">
                     <table>
@@ -74,6 +76,10 @@
                         alert(res)
                     }
                 })
+            }
+
+            function downloadFile() {
+                window.location.href = "download/students"
             }
         </script>
     </body>

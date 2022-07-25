@@ -1,10 +1,17 @@
 package com.example.demo.utils;
 
 import com.example.demo.bean.StudentBean;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -133,5 +140,70 @@ public class ExcelUtils {
             LOGGER.error("parse excel file error :", e);
         }
         return studentBeanList;
+    }
+
+
+    /**
+     * 数据导出到excle
+     *
+     * @param studentBeanList     学生列表
+     * @param httpServletResponse
+     * @return
+     */
+    public static void exportToExcel(List<StudentBean> studentBeanList, HttpServletResponse httpServletResponse) {
+        ServletOutputStream outputStream;
+        try {
+            outputStream = httpServletResponse.getOutputStream();
+
+            XSSFWorkbook workbook = new XSSFWorkbook();
+
+            XSSFSheet sheet = workbook.createSheet("students");
+
+            String[] titles = {"num", "name", "chineseScore", "mathScore", "englishScore", "totalScore"};
+            int colLength = titles.length;
+            XSSFRow titleRow = sheet.createRow(0);
+            for (int i = 0; i < colLength; i++) {
+                XSSFCell titleCell = titleRow.createCell(i);
+                titleCell.setCellType(CellType.STRING);
+                titleCell.setCellValue(titles[i]);
+            }
+            for (int i = 1; i < studentBeanList.size(); i++) {
+                StudentBean studentBean = studentBeanList.get(i);
+                XSSFRow dataRow = sheet.createRow(i);
+                for (int j = 0; j < colLength; j++) {
+                    XSSFCell dataCell = dataRow.createCell(j);
+                    dataCell.setCellType(CellType.STRING);
+                    switch (j) {
+                        case 0:
+                            dataCell.setCellValue(studentBean.getNum());
+                            break;
+                        case 1:
+                            dataCell.setCellValue(studentBean.getName());
+                            break;
+                        case 2:
+                            dataCell.setCellValue(studentBean.getChineseScore());
+                            break;
+                        case 3:
+                            dataCell.setCellValue(studentBean.getMathScore());
+                            break;
+                        case 4:
+                            dataCell.setCellValue(studentBean.getEnglishScore());
+                            break;
+                        case 5:
+                            dataCell.setCellValue(studentBean.getTotalScore());
+                            break;
+                    }
+                }
+            }
+            httpServletResponse.setContentType("application/vnd.ms-excel");
+            httpServletResponse.setHeader("Content-Disposition", "attachment; filename=" + "students1.xlsx");
+            httpServletResponse.setCharacterEncoding("UTF-8");
+            workbook.write(outputStream);
+            workbook.close();
+            outputStream.flush();
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
