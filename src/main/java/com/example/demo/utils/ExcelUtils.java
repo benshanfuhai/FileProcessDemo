@@ -13,7 +13,13 @@ import java.util.List;
 public class ExcelUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExcelUtils.class);
 
-    public static List<StudentBean> excelToShopIdList(InputStream inputStream) {
+    /**
+     * 测试数据导入
+     *
+     * @param inputStream
+     * @return
+     */
+    public static List<StudentBean> excelToStudentList_i(InputStream inputStream) {
         List<StudentBean> studentBeanList = new ArrayList<>();
         Workbook workbook;
         try {
@@ -72,7 +78,13 @@ public class ExcelUtils {
     }
 
 
-    public static List<StudentBean> excelToDB(InputStream inputStream) {
+    /**
+     * excel文件转化为Student列表
+     *
+     * @param inputStream
+     * @return
+     */
+    public static List<StudentBean> excelToStudentList(InputStream inputStream) {
         List<StudentBean> studentBeanList = new ArrayList<>();
         Workbook workbook;
         try {

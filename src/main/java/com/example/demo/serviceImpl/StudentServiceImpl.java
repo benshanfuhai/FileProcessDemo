@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,7 +19,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public boolean batchImport(MultipartFile multipartFile) {
         try {
-            List<StudentBean> studentBeanList = ExcelUtils.excelToDB(multipartFile.getInputStream());
+            List<StudentBean> studentBeanList = ExcelUtils.excelToStudentList(multipartFile.getInputStream());
             for (StudentBean studentBean : studentBeanList) {
                 studentMapper.addStudent(studentBean);
             }

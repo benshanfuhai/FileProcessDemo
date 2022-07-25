@@ -4,9 +4,11 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.bean.StudentBean;
 import com.example.demo.service.StudentService;
+import com.example.demo.utils.ExcelUtils;
 import com.mysql.cj.xdevapi.JsonArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,12 +16,29 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.*;
+import java.util.List;
 
 @Controller
 public class StudentController {
 
     @Autowired
     StudentService studentService;
+
+    @PostMapping("/file/upload")
+    @ResponseBody
+    public List<StudentBean> parseExcel(@RequestParam("file") MultipartFile multipartFile, Model model) throws
+            Exception {
+        String fileName = multipartFile.getOriginalFilename();
+        // System.out.println(fileName);
+        if (!fileName.substring(fileName.length() - 5).equals(".xlsx")) {
+            model.addAttribute("error", "文件解析错误");
+            return null;
+        }
+        List<StudentBean> studentBeanList = ExcelUtils.excelToStudentList(multipartFile.getInputStream());
+        model.addAttribute("msg", studentBeanList);
+        return studentBeanList;
+    }
 
     @PostMapping("/uploadToDB")
     @ResponseBody

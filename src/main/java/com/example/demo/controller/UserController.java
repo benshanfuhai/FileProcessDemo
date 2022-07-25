@@ -29,19 +29,4 @@ public class UserController {
     public boolean login(String username, String password) {
         return userService.verifyUserByUsername(username, password);
     }
-
-    @PostMapping("file/upload")
-    @ResponseBody
-    public List<StudentBean> parseExcel(@RequestParam("file") MultipartFile multipartFile, Model model) throws Exception {
-        String fileName = multipartFile.getOriginalFilename();
-        // System.out.println(fileName);
-        if (!fileName.substring(fileName.length() - 5).equals(".xlsx")) {
-            model.addAttribute("error", "文件解析错误");
-            return null;
-        }
-        List<StudentBean> studentBeanList = ExcelUtils.excelToShopIdList(multipartFile.getInputStream());
-        model.addAttribute("msg", studentBeanList);
-        return studentBeanList;
-    }
-
 }
